@@ -1,0 +1,9 @@
+package logic
+
+const (
+	CLOSECLT_NOTIFY = 0
+	HELLOWORLD_REQ  = 1
+	HELLOWORLD_RSP  = 2
+	ONCEHELLO_REQ   = 3
+	ONCEHELLO_RESP  = 4
+)
