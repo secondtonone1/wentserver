@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"sync"
 	"syscall"
-	"wentby/config"
+	"wentserver/config"
 )
 
 func NewServer() (*WtServer, error) {

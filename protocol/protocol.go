@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io"
 	"net"
-	"wentby/config"
+	"wentserver/config"
 )
 
 // PacketReader is used to unmarshal a complete packet from buff

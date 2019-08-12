@@ -2,8 +2,13 @@ package main
 
 import (
 	"fmt"
-	"wentby/netmodel"
-	"wentby/protocol"
+	"wentserver/config"
+	"wentserver/logic"
+	"wentserver/netmodel"
+	wentproto "wentserver/proto"
+	"wentserver/protocol"
+
+	"github.com/gogo/protobuf/proto"
 )
 
 func main() {
@@ -13,9 +18,19 @@ func main() {
 		return
 	}
 	packet := new(protocol.MsgPacket)
-	packet.Head.Id = 1
-	packet.Head.Len = 5
-	packet.Body.Data = []byte("Hello")
+	packet.Head.Id = logic.PLAYERINFO_REQ
+	csplayerinfo := &wentproto.CSPlayerInfo{
+		Accountname: "Zack",
+	}
+
+	//protobuf编码
+	pData, err := proto.Marshal(csplayerinfo)
+	if err != nil {
+		fmt.Println(config.ErrProtobuffMarshal.Error())
+		return
+	}
+	packet.Head.Len = (uint16)(len(pData))
+	packet.Body.Data = pData
 	cs.Send(packet)
 	packetrsp, err := cs.Recv()
 	if err != nil {
@@ -26,5 +41,13 @@ func main() {
 	datarsp := packetrsp.(*protocol.MsgPacket)
 	fmt.Println("packet id is", datarsp.Head.Id)
 	fmt.Println("packet len is", datarsp.Head.Len)
-	fmt.Println("packet data is", string(datarsp.Body.Data))
+	scplayerinfo := &wentproto.SCPlayerInfo{}
+	error2 := proto.Unmarshal(datarsp.Body.Data, scplayerinfo)
+	if error2 != nil {
+		fmt.Println(config.ErrProtobuffUnMarshal.Error())
+		return
+	}
+	fmt.Println("scplayerinfo.Playerinfo.Accountid is ", scplayerinfo.Playerinfo.Accountid)
+	fmt.Println("scplayerinfo.Playerinfo.Accountname is ", scplayerinfo.Playerinfo.Accountname)
+
 }

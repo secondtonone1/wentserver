@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
-	"wentby/config"
-	"wentby/httplogic"
-	"wentby/weblogic"
+	"wentserver/config"
+	"wentserver/httplogic"
+	"wentserver/weblogic"
 )
 
 type WtWebServer struct {

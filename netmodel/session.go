@@ -6,8 +6,8 @@ import (
 	"sync"
 	"sync/atomic"
 	"time"
-	"wentby/config"
-	"wentby/protocol"
+	"wentserver/config"
+	"wentserver/protocol"
 )
 
 type Session struct {

@@ -2,8 +2,8 @@ package netmodel
 
 import (
 	"sync"
-	"wentby/config"
-	"wentby/protocol"
+	"wentserver/config"
+	"wentserver/protocol"
 )
 
 type MsgHandlerInter interface {

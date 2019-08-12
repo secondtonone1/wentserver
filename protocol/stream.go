@@ -2,7 +2,7 @@ package protocol
 
 import (
 	"encoding/binary"
-	"wentby/config"
+	"wentserver/config"
 )
 
 type StreamInter interface {

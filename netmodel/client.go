@@ -5,8 +5,8 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-	"wentby/config"
-	"wentby/protocol"
+	"wentserver/config"
+	"wentserver/protocol"
 )
 
 type ClientSess struct {

@@ -1,8 +1,8 @@
 package main
 
 import (
-	"wentby/logic"
-	"wentby/netmodel"
+	"wentserver/logic"
+	"wentserver/netmodel"
 )
 
 func main() {

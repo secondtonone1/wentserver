@@ -38,4 +38,6 @@ var (
 	ErrWebSocketDail       = errors.New("Websocket dail failed!")
 	ErrWebSocketWrite      = errors.New("Websocket write failed!")
 	ErrAsyncSendFailed     = errors.New("Async Send Failed!")
+	ErrProtobuffMarshal    = errors.New("Protobuff Marshal failed!")
+	ErrProtobuffUnMarshal  = errors.New("Protobuff UnMarshal failed!")
 )

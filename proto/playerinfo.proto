@@ -1,0 +1,20 @@
+syntax = "proto3";  //指定版本，必须要写（proto3、proto2）  
+package proto;
+
+//message是固定的。PlayerInfo是类名
+message PlayerInfo{	
+    int64 accountid = 1;
+    string accountname = 2;
+}
+
+message PlayerInfos{
+	map<int64, PlayerInfo> playerinfomap = 2;
+}
+
+message CSPlayerInfo{
+	string accountname = 1;
+}
+
+message SCPlayerInfo{
+	PlayerInfo playerinfo = 1;
+}

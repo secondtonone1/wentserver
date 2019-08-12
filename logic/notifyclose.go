@@ -3,15 +3,15 @@ package logic
 import (
 	"fmt"
 	"time"
-	"wentby/config"
-	"wentby/netmodel"
-	"wentby/protocol"
+	"wentserver/config"
+	"wentserver/netmodel"
+	"wentserver/protocol"
 )
 
 func NotifyClientClose(se interface{}, param interface{}) error {
 
 	notifyclose := new(protocol.MsgPacket)
-	notifyclose.Head.Id = HELLOWORLD_RSP
+	notifyclose.Head.Id = CLOSECLT_NOTIFY
 	notifyclose.Head.Len = uint16(len("Server close your connection"))
 	notifyclose.Body.Data = []byte("Server close your connection")
 	session, ok := se.(*netmodel.Session)

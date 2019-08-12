@@ -3,7 +3,7 @@ package weblogic
 import (
 	"fmt"
 	"net/http"
-	"wentby/config"
+	"wentserver/config"
 
 	"golang.org/x/net/websocket"
 )
