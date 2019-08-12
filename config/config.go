@@ -40,4 +40,6 @@ var (
 	ErrAsyncSendFailed     = errors.New("Async Send Failed!")
 	ErrProtobuffMarshal    = errors.New("Protobuff Marshal failed!")
 	ErrProtobuffUnMarshal  = errors.New("Protobuff UnMarshal failed!")
+	ErrPlayerIdNotExist    = errors.New("PlayerId not exist!")
+	ErrPlayerMapEmpty      = errors.New("Player Map Empty!")
 )
