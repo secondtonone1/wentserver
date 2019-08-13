@@ -42,4 +42,7 @@ var (
 	ErrProtobuffUnMarshal  = errors.New("Protobuff UnMarshal failed!")
 	ErrAccountNameNotExist = errors.New("Account name not exist!")
 	ErrAccountMapEmpty     = errors.New("Account Map Empty!")
+	ErrDBInitFailed        = errors.New("DB init failed!")
+	ErrDBGetValueFailed    = errors.New("DB GET VALUE FAILED")
+	ErrDBPutValueFailed    = errors.New("DB PUT VALUE FAILED")
 )
