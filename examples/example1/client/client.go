@@ -18,8 +18,8 @@ func main() {
 		return
 	}
 	packet := new(protocol.MsgPacket)
-	packet.Head.Id = logic.PLAYERINFO_REQ
-	csplayerinfo := &wentproto.CSPlayerInfo{
+	packet.Head.Id = logic.ACCOUNTINFO_REQ
+	csplayerinfo := &wentproto.CSAccountInfo{
 		Accountname: "Zack",
 	}
 
@@ -41,13 +41,13 @@ func main() {
 	datarsp := packetrsp.(*protocol.MsgPacket)
 	fmt.Println("packet id is", datarsp.Head.Id)
 	fmt.Println("packet len is", datarsp.Head.Len)
-	scplayerinfo := &wentproto.SCPlayerInfo{}
+	scplayerinfo := &wentproto.SCAccountInfo{}
 	error2 := proto.Unmarshal(datarsp.Body.Data, scplayerinfo)
 	if error2 != nil {
 		fmt.Println(config.ErrProtobuffUnMarshal.Error())
 		return
 	}
-	fmt.Println("scplayerinfo.Playerinfo.Accountid is ", scplayerinfo.Playerinfo.Accountid)
-	fmt.Println("scplayerinfo.Playerinfo.Accountname is ", scplayerinfo.Playerinfo.Accountname)
+	fmt.Println("scplayerinfo.Playerinfo.Accountid is ", scplayerinfo.Accountinfo.Accountid)
+	fmt.Println("scplayerinfo.Playerinfo.Accountname is ", scplayerinfo.Accountinfo.Accountname)
 
 }

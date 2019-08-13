@@ -1,5 +1,5 @@
 package logic
 
 func RegServerHandlers() {
-	RegPlayerInfoReq()
+	RegAccountInfoReq()
 }

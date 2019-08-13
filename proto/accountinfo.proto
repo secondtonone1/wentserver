@@ -1,0 +1,20 @@
+syntax = "proto3";  //指定版本，必须要写（proto3、proto2）  
+package proto;
+//protoc --gofast_out=. *.proto
+//message是固定的。AccountInfo是类名
+message AccountInfo{	
+    int64 accountid = 1;
+    string accountname = 2;
+}
+
+message AccountInfos{
+	map<string, AccountInfo> accountmap = 2;
+}
+
+message CSAccountInfo{
+	string accountname = 1;
+}
+
+message SCAccountInfo{
+	AccountInfo accountinfo = 1;
+}

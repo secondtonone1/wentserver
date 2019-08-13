@@ -2,6 +2,6 @@ package logic
 
 const (
 	CLOSECLT_NOTIFY = 0
-	PLAYERINFO_REQ  = 1
-	PLAYERINFO_RSP  = 2
+	ACCOUNTINFO_REQ = 1
+	ACCOUNTINFO_RSP = 2
 )

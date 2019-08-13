@@ -10,8 +10,8 @@ import (
 	"github.com/gogo/protobuf/proto"
 )
 
-func RegPlayerInfoReq() {
-	var PlayerInfoReq netmodel.CallBackFunc = func(se interface{}, param interface{}) error {
+func RegAccountInfoReq() {
+	var AccountInfoReq netmodel.CallBackFunc = func(se interface{}, param interface{}) error {
 		msgpacket, ok := param.(*protocol.MsgPacket)
 		if !ok {
 			return config.ErrTypeAssertain
@@ -24,7 +24,7 @@ func RegPlayerInfoReq() {
 
 		fmt.Println("Server recieve from ", session.RawConn().RemoteAddr().String())
 		fmt.Println("Server Recv MsgID is ", msgpacket.Head.Id)
-		inforeq := &wentproto.CSPlayerInfo{}
+		inforeq := &wentproto.CSAccountInfo{}
 
 		err := proto.Unmarshal(msgpacket.Body.Data, inforeq)
 		if err != nil {
@@ -32,15 +32,15 @@ func RegPlayerInfoReq() {
 		}
 
 		playerinforsp := new(protocol.MsgPacket)
-		playerinforsp.Head.Id = PLAYERINFO_RSP
+		playerinforsp.Head.Id = ACCOUNTINFO_RSP
 
-		playerinfos := wentproto.PlayerInfo{
+		playerinfos := wentproto.AccountInfo{
 			Accountid:   1,
 			Accountname: inforeq.Accountname,
 		}
 
-		inforsp := &wentproto.SCPlayerInfo{
-			Playerinfo: &playerinfos,
+		inforsp := &wentproto.SCAccountInfo{
+			Accountinfo: &playerinfos,
 		}
 		rspdata, err := proto.Marshal(inforsp)
 		if err != nil {
@@ -57,5 +57,5 @@ func RegPlayerInfoReq() {
 		return nil
 	}
 
-	netmodel.MsgHandler.RegMsgHandler(PLAYERINFO_REQ, PlayerInfoReq)
+	netmodel.MsgHandler.RegMsgHandler(ACCOUNTINFO_REQ, AccountInfoReq)
 }
