@@ -8,7 +8,7 @@ import (
 
 func main() {
 	logic.RegServerHandlers()
-	var dbmgr *wentdb.DBManager = wentdb.NewDBManage()
+	var dbmgr *wentdb.DBManager = wentdb.GetDBManagerIns()
 	err := dbmgr.InitDB("./lvdb")
 	if err != nil {
 		return

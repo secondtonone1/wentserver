@@ -1,11 +1,13 @@
 package wentdb
 
 import (
+	"fmt"
 	"wentserver/config"
 
 	"sync"
 
 	"github.com/syndtr/goleveldb/leveldb"
+	"github.com/syndtr/goleveldb/leveldb/util"
 )
 
 type DBManager struct {
@@ -53,4 +55,24 @@ func (dbm *DBManager) PutData(key []byte, value []byte) error {
 		return config.ErrDBPutValueFailed
 	}
 	return nil
+}
+
+func (dbm *DBManager) LoadAccountData() map[string]string {
+	iter := dbm.db.NewIterator(util.BytesPrefix([]byte("account_")), nil)
+	maprt := make(map[string]string)
+	for iter.Next() {
+		fmt.Printf("[%s]:%s\n", iter.Key(), iter.Value())
+		maprt[string(iter.Key())] = string(iter.Value())
+	}
+	return maprt
+}
+
+var ins *DBManager
+var once sync.Once
+
+func GetDBManagerIns() *DBManager {
+	once.Do(func() {
+		ins = NewDBManage()
+	})
+	return ins
 }
