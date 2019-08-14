@@ -34,8 +34,8 @@ func (pm *AccountManager) GetAccount(name string) (interface{}, error) {
 }
 
 func (am *AccountManager) RegAccount(name string, act *wentproto.AccountInfo) {
-	am.lock.RLock()
-	defer am.lock.RUnlock()
+	am.lock.Lock()
+	defer am.lock.Unlock()
 	infomap := am.AccountInfos.GetAccountmap()
 	infomap[name] = act
 }

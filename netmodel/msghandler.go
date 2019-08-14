@@ -99,4 +99,12 @@ func (mh *MsgHandlerImpl) SafeRegMsgHandler(cbid uint16, param interface{}) erro
 	return nil
 }
 
-var MsgHandler = &MsgHandlerImpl{cbfuncs: make(map[uint16]CallBackFunc)}
+var ins *MsgHandlerImpl
+var once sync.Once
+
+func GetMsgHandlerIns() *MsgHandlerImpl {
+	once.Do(func() {
+		ins = &MsgHandlerImpl{cbfuncs: make(map[uint16]CallBackFunc)}
+	})
+	return ins
+}

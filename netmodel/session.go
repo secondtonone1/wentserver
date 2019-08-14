@@ -129,7 +129,7 @@ func (se *Session) recvLoop() {
 				}
 
 				//handle msg packet
-				hdres := MsgHandler.HandleMsgPacket(packet, se)
+				hdres := GetMsgHandlerIns().HandleMsgPacket(packet, se)
 				if hdres != nil {
 					fmt.Println(hdres.Error())
 					return

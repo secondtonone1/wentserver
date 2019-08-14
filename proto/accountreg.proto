@@ -1,0 +1,12 @@
+syntax = "proto3";  //指定版本，必须要写（proto3、proto2）  
+package proto;
+import "accountinfo.proto";
+//protoc --gofast_out=. *.proto
+
+message CSAccountReg{
+	string accountname = 1;
+}
+
+message SCAccountReg{
+	AccountInfo accountinfo = 1;
+}
