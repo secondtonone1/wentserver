@@ -31,25 +31,48 @@ func RegAccountInfoReq() {
 			return config.ErrProtobuffUnMarshal
 		}
 
-		playerinforsp := new(protocol.MsgPacket)
-		playerinforsp.Head.Id = ACCOUNTINFO_RSP
+		actinfo, err := GetAccountManagerIns().GetAccount(inforeq.Accountname)
+		if err != nil {
+			actinforsp := new(protocol.MsgPacket)
+			actinforsp.Head.Id = ACCOUNTINFO_RSP
+			inforsp := &wentproto.SCAccountInfo{
+				Errid: ERR_ACTNOTEXIST,
+			}
 
-		playerinfos := wentproto.AccountInfo{
-			Accountid:   1,
-			Accountname: inforeq.Accountname,
+			rspdata, err := proto.Marshal(inforsp)
+			if err != nil {
+				return config.ErrProtobuffMarshal
+			}
+
+			actinforsp.Head.Len = uint16(len(rspdata))
+			actinforsp.Body.Data = rspdata
+			err = session.AsyncSend(actinforsp)
+			if err != nil {
+				fmt.Println("Handle Msg HelloworldReq failed")
+				return config.ErrHelloWorldReqFailed
+			}
+
+			return nil
 		}
 
+		actinfopl, ok := actinfo.(*wentproto.AccountInfo)
+		if !ok {
+			return config.ErrTypeAssertain
+		}
+		actinforsp := new(protocol.MsgPacket)
+		actinforsp.Head.Id = ACCOUNTINFO_RSP
+
 		inforsp := &wentproto.SCAccountInfo{
-			Accountinfo: &playerinfos,
+			Accountinfo: actinfopl,
 		}
 		rspdata, err := proto.Marshal(inforsp)
 		if err != nil {
 			return config.ErrProtobuffMarshal
 		}
 
-		playerinforsp.Head.Len = uint16(len(rspdata))
-		playerinforsp.Body.Data = rspdata
-		err = session.AsyncSend(playerinforsp)
+		actinforsp.Head.Len = uint16(len(rspdata))
+		actinforsp.Body.Data = rspdata
+		err = session.AsyncSend(actinforsp)
 		if err != nil {
 			fmt.Println("Handle Msg HelloworldReq failed")
 			return config.ErrHelloWorldReqFailed

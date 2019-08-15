@@ -45,4 +45,6 @@ var (
 	ErrDBInitFailed        = errors.New("DB init failed!")
 	ErrDBGetValueFailed    = errors.New("DB GET VALUE FAILED")
 	ErrDBPutValueFailed    = errors.New("DB PUT VALUE FAILED")
+	ErrAccountMgrInit      = errors.New("AccountMgr init failed")
+	ErrPlayerMgrInit       = errors.New("PlayerMgr init failed")
 )

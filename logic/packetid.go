@@ -7,3 +7,8 @@ const (
 	ACCOUNTREG_REQ  = 3
 	ACCOUNTREG_RSP  = 4
 )
+
+const (
+	ERR_NONE        = 0
+	ERR_ACTNOTEXIST = 1
+)

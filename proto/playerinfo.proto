@@ -1,0 +1,29 @@
+syntax = "proto3";  //指定版本，必须要写（proto3、proto2）  
+package proto;
+//protoc --gofast_out=. *.proto
+
+message CSPlayerBaseInfo{
+	int64 accountid = 1;
+}
+
+message SCPlayerBaseInfo{
+    int32 errid = 1;
+	PlayerBaseInfo playerinfo = 2;
+}
+
+message PlayerBaseInfo{
+    int64 accountid = 1;
+    string accountname = 2;
+    int64  playeruid = 3;
+    string playername = 4;
+}
+
+message PlayerEquipInfo{
+    int64 equipuid = 1;
+    int32 equipid = 2;
+}
+
+message PlayerInfo{
+    //可继续添加player其他数据
+    PlayerEquipInfo equipdata = 1;
+}

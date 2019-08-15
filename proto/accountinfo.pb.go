@@ -78,53 +78,6 @@ func (m *AccountInfo) GetAccountname() string {
 	return ""
 }
 
-type AccountInfos struct {
-	Accountmap           map[string]*AccountInfo `protobuf:"bytes,2,rep,name=accountmap,proto3" json:"accountmap,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
-	XXX_NoUnkeyedLiteral struct{}                `json:"-"`
-	XXX_unrecognized     []byte                  `json:"-"`
-	XXX_sizecache        int32                   `json:"-"`
-}
-
-func (m *AccountInfos) Reset()         { *m = AccountInfos{} }
-func (m *AccountInfos) String() string { return proto.CompactTextString(m) }
-func (*AccountInfos) ProtoMessage()    {}
-func (*AccountInfos) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c818053d22c59a62, []int{1}
-}
-func (m *AccountInfos) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *AccountInfos) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_AccountInfos.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *AccountInfos) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_AccountInfos.Merge(m, src)
-}
-func (m *AccountInfos) XXX_Size() int {
-	return m.Size()
-}
-func (m *AccountInfos) XXX_DiscardUnknown() {
-	xxx_messageInfo_AccountInfos.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_AccountInfos proto.InternalMessageInfo
-
-func (m *AccountInfos) GetAccountmap() map[string]*AccountInfo {
-	if m != nil {
-		return m.Accountmap
-	}
-	return nil
-}
-
 type CSAccountInfo struct {
 	Accountname          string   `protobuf:"bytes,1,opt,name=accountname,proto3" json:"accountname,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -136,7 +89,7 @@ func (m *CSAccountInfo) Reset()         { *m = CSAccountInfo{} }
 func (m *CSAccountInfo) String() string { return proto.CompactTextString(m) }
 func (*CSAccountInfo) ProtoMessage()    {}
 func (*CSAccountInfo) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c818053d22c59a62, []int{2}
+	return fileDescriptor_c818053d22c59a62, []int{1}
 }
 func (m *CSAccountInfo) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -173,7 +126,8 @@ func (m *CSAccountInfo) GetAccountname() string {
 }
 
 type SCAccountInfo struct {
-	Accountinfo          *AccountInfo `protobuf:"bytes,1,opt,name=accountinfo,proto3" json:"accountinfo,omitempty"`
+	Errid                int32        `protobuf:"varint,1,opt,name=errid,proto3" json:"errid,omitempty"`
+	Accountinfo          *AccountInfo `protobuf:"bytes,2,opt,name=accountinfo,proto3" json:"accountinfo,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
 	XXX_unrecognized     []byte       `json:"-"`
 	XXX_sizecache        int32        `json:"-"`
@@ -183,7 +137,7 @@ func (m *SCAccountInfo) Reset()         { *m = SCAccountInfo{} }
 func (m *SCAccountInfo) String() string { return proto.CompactTextString(m) }
 func (*SCAccountInfo) ProtoMessage()    {}
 func (*SCAccountInfo) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c818053d22c59a62, []int{3}
+	return fileDescriptor_c818053d22c59a62, []int{2}
 }
 func (m *SCAccountInfo) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -212,6 +166,13 @@ func (m *SCAccountInfo) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_SCAccountInfo proto.InternalMessageInfo
 
+func (m *SCAccountInfo) GetErrid() int32 {
+	if m != nil {
+		return m.Errid
+	}
+	return 0
+}
+
 func (m *SCAccountInfo) GetAccountinfo() *AccountInfo {
 	if m != nil {
 		return m.Accountinfo
@@ -221,8 +182,6 @@ func (m *SCAccountInfo) GetAccountinfo() *AccountInfo {
 
 func init() {
 	proto.RegisterType((*AccountInfo)(nil), "proto.AccountInfo")
-	proto.RegisterType((*AccountInfos)(nil), "proto.AccountInfos")
-	proto.RegisterMapType((map[string]*AccountInfo)(nil), "proto.AccountInfos.AccountmapEntry")
 	proto.RegisterType((*CSAccountInfo)(nil), "proto.CSAccountInfo")
 	proto.RegisterType((*SCAccountInfo)(nil), "proto.SCAccountInfo")
 }
@@ -230,22 +189,18 @@ func init() {
 func init() { proto.RegisterFile("accountinfo.proto", fileDescriptor_c818053d22c59a62) }
 
 var fileDescriptor_c818053d22c59a62 = []byte{
-	// 234 bytes of a gzipped FileDescriptorProto
+	// 169 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0x4c, 0x4c, 0x4e, 0xce,
 	0x2f, 0xcd, 0x2b, 0xc9, 0xcc, 0x4b, 0xcb, 0xd7, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x05,
 	0x53, 0x4a, 0xbe, 0x5c, 0xdc, 0x8e, 0x10, 0x39, 0xcf, 0xbc, 0xb4, 0x7c, 0x21, 0x19, 0x2e, 0x4e,
 	0x98, 0xd2, 0x14, 0x09, 0x46, 0x05, 0x46, 0x0d, 0xe6, 0x20, 0x84, 0x80, 0x90, 0x02, 0x17, 0x37,
-	0x94, 0x93, 0x97, 0x98, 0x9b, 0x2a, 0xc1, 0xa4, 0xc0, 0xa8, 0xc1, 0x19, 0x84, 0x2c, 0xa4, 0xb4,
-	0x8c, 0x91, 0x8b, 0x07, 0xc9, 0xbc, 0x62, 0x21, 0x67, 0x2e, 0x2e, 0xa8, 0x7c, 0x6e, 0x62, 0x81,
-	0x04, 0x93, 0x02, 0xb3, 0x06, 0xb7, 0x91, 0x32, 0xc4, 0x09, 0x7a, 0xc8, 0x0a, 0x61, 0x9c, 0xdc,
-	0xc4, 0x02, 0xd7, 0xbc, 0x92, 0xa2, 0xca, 0x20, 0x24, 0x6d, 0x52, 0x81, 0x5c, 0xfc, 0x68, 0xd2,
-	0x42, 0x02, 0x5c, 0xcc, 0xd9, 0xa9, 0x95, 0x60, 0x27, 0x72, 0x06, 0x81, 0x98, 0x42, 0x1a, 0x5c,
-	0xac, 0x65, 0x89, 0x39, 0xa5, 0x10, 0x67, 0x71, 0x1b, 0x09, 0x61, 0x5a, 0x12, 0x04, 0x51, 0x60,
-	0xc5, 0x64, 0xc1, 0xa8, 0x64, 0xc8, 0xc5, 0xeb, 0x1c, 0x8c, 0xec, 0x73, 0x34, 0xbf, 0x31, 0x62,
-	0xfa, 0xcd, 0x95, 0x8b, 0x37, 0xd8, 0x19, 0x59, 0x8b, 0x09, 0x5c, 0x0b, 0x28, 0x5c, 0xc1, 0x5a,
-	0xb0, 0xdb, 0x8b, 0xac, 0xcc, 0x49, 0xe0, 0xc4, 0x23, 0x39, 0xc6, 0x0b, 0x8f, 0xe4, 0x18, 0x1f,
-	0x3c, 0x92, 0x63, 0x9c, 0xf1, 0x58, 0x8e, 0x21, 0x89, 0x0d, 0xac, 0xc3, 0x18, 0x10, 0x00, 0x00,
-	0xff, 0xff, 0x72, 0xed, 0xcd, 0xcf, 0xa6, 0x01, 0x00, 0x00,
+	0x94, 0x93, 0x97, 0x98, 0x9b, 0x2a, 0xc1, 0xa4, 0xc0, 0xa8, 0xc1, 0x19, 0x84, 0x2c, 0xa4, 0x64,
+	0xc8, 0xc5, 0xeb, 0x1c, 0x8c, 0x6c, 0x20, 0x9a, 0x16, 0x46, 0x4c, 0x2d, 0xd1, 0x5c, 0xbc, 0xc1,
+	0xce, 0xc8, 0x5a, 0x44, 0xb8, 0x58, 0x53, 0x8b, 0x8a, 0xa0, 0xf6, 0xb3, 0x06, 0x41, 0x38, 0x42,
+	0x26, 0x70, 0x83, 0x40, 0x9e, 0x00, 0xdb, 0xcd, 0x6d, 0x24, 0x04, 0xf1, 0x8c, 0x1e, 0x92, 0xf6,
+	0x20, 0x64, 0x65, 0x4e, 0x02, 0x27, 0x1e, 0xc9, 0x31, 0x5e, 0x78, 0x24, 0xc7, 0xf8, 0xe0, 0x91,
+	0x1c, 0xe3, 0x8c, 0xc7, 0x72, 0x0c, 0x49, 0x6c, 0x60, 0x1d, 0xc6, 0x80, 0x00, 0x00, 0x00, 0xff,
+	0xff, 0x78, 0xa6, 0xeb, 0x56, 0x13, 0x01, 0x00, 0x00,
 }
 
 func (m *AccountInfo) Marshal() (dAtA []byte, err error) {
@@ -273,55 +228,6 @@ func (m *AccountInfo) MarshalTo(dAtA []byte) (int, error) {
 		i++
 		i = encodeVarintAccountinfo(dAtA, i, uint64(len(m.Accountname)))
 		i += copy(dAtA[i:], m.Accountname)
-	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	return i, nil
-}
-
-func (m *AccountInfos) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *AccountInfos) MarshalTo(dAtA []byte) (int, error) {
-	var i int
-	_ = i
-	var l int
-	_ = l
-	if len(m.Accountmap) > 0 {
-		for k, _ := range m.Accountmap {
-			dAtA[i] = 0x12
-			i++
-			v := m.Accountmap[k]
-			msgSize := 0
-			if v != nil {
-				msgSize = v.Size()
-				msgSize += 1 + sovAccountinfo(uint64(msgSize))
-			}
-			mapSize := 1 + len(k) + sovAccountinfo(uint64(len(k))) + msgSize
-			i = encodeVarintAccountinfo(dAtA, i, uint64(mapSize))
-			dAtA[i] = 0xa
-			i++
-			i = encodeVarintAccountinfo(dAtA, i, uint64(len(k)))
-			i += copy(dAtA[i:], k)
-			if v != nil {
-				dAtA[i] = 0x12
-				i++
-				i = encodeVarintAccountinfo(dAtA, i, uint64(v.Size()))
-				n1, err1 := v.MarshalTo(dAtA[i:])
-				if err1 != nil {
-					return 0, err1
-				}
-				i += n1
-			}
-		}
 	}
 	if m.XXX_unrecognized != nil {
 		i += copy(dAtA[i:], m.XXX_unrecognized)
@@ -371,15 +277,20 @@ func (m *SCAccountInfo) MarshalTo(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.Errid != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintAccountinfo(dAtA, i, uint64(m.Errid))
+	}
 	if m.Accountinfo != nil {
-		dAtA[i] = 0xa
+		dAtA[i] = 0x12
 		i++
 		i = encodeVarintAccountinfo(dAtA, i, uint64(m.Accountinfo.Size()))
-		n2, err2 := m.Accountinfo.MarshalTo(dAtA[i:])
-		if err2 != nil {
-			return 0, err2
+		n1, err1 := m.Accountinfo.MarshalTo(dAtA[i:])
+		if err1 != nil {
+			return 0, err1
 		}
-		i += n2
+		i += n1
 	}
 	if m.XXX_unrecognized != nil {
 		i += copy(dAtA[i:], m.XXX_unrecognized)
@@ -415,31 +326,6 @@ func (m *AccountInfo) Size() (n int) {
 	return n
 }
 
-func (m *AccountInfos) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if len(m.Accountmap) > 0 {
-		for k, v := range m.Accountmap {
-			_ = k
-			_ = v
-			l = 0
-			if v != nil {
-				l = v.Size()
-				l += 1 + sovAccountinfo(uint64(l))
-			}
-			mapEntrySize := 1 + len(k) + sovAccountinfo(uint64(len(k))) + l
-			n += mapEntrySize + 1 + sovAccountinfo(uint64(mapEntrySize))
-		}
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
 func (m *CSAccountInfo) Size() (n int) {
 	if m == nil {
 		return 0
@@ -462,6 +348,9 @@ func (m *SCAccountInfo) Size() (n int) {
 	}
 	var l int
 	_ = l
+	if m.Errid != 0 {
+		n += 1 + sovAccountinfo(uint64(m.Errid))
+	}
 	if m.Accountinfo != nil {
 		l = m.Accountinfo.Size()
 		n += 1 + l + sovAccountinfo(uint64(l))
@@ -564,189 +453,6 @@ func (m *AccountInfo) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.Accountname = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipAccountinfo(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthAccountinfo
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthAccountinfo
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *AccountInfos) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowAccountinfo
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: AccountInfos: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: AccountInfos: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Accountmap", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowAccountinfo
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthAccountinfo
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthAccountinfo
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Accountmap == nil {
-				m.Accountmap = make(map[string]*AccountInfo)
-			}
-			var mapkey string
-			var mapvalue *AccountInfo
-			for iNdEx < postIndex {
-				entryPreIndex := iNdEx
-				var wire uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowAccountinfo
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					wire |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				fieldNum := int32(wire >> 3)
-				if fieldNum == 1 {
-					var stringLenmapkey uint64
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return ErrIntOverflowAccountinfo
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						stringLenmapkey |= uint64(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
-					}
-					intStringLenmapkey := int(stringLenmapkey)
-					if intStringLenmapkey < 0 {
-						return ErrInvalidLengthAccountinfo
-					}
-					postStringIndexmapkey := iNdEx + intStringLenmapkey
-					if postStringIndexmapkey < 0 {
-						return ErrInvalidLengthAccountinfo
-					}
-					if postStringIndexmapkey > l {
-						return io.ErrUnexpectedEOF
-					}
-					mapkey = string(dAtA[iNdEx:postStringIndexmapkey])
-					iNdEx = postStringIndexmapkey
-				} else if fieldNum == 2 {
-					var mapmsglen int
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return ErrIntOverflowAccountinfo
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						mapmsglen |= int(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
-					}
-					if mapmsglen < 0 {
-						return ErrInvalidLengthAccountinfo
-					}
-					postmsgIndex := iNdEx + mapmsglen
-					if postmsgIndex < 0 {
-						return ErrInvalidLengthAccountinfo
-					}
-					if postmsgIndex > l {
-						return io.ErrUnexpectedEOF
-					}
-					mapvalue = &AccountInfo{}
-					if err := mapvalue.Unmarshal(dAtA[iNdEx:postmsgIndex]); err != nil {
-						return err
-					}
-					iNdEx = postmsgIndex
-				} else {
-					iNdEx = entryPreIndex
-					skippy, err := skipAccountinfo(dAtA[iNdEx:])
-					if err != nil {
-						return err
-					}
-					if skippy < 0 {
-						return ErrInvalidLengthAccountinfo
-					}
-					if (iNdEx + skippy) > postIndex {
-						return io.ErrUnexpectedEOF
-					}
-					iNdEx += skippy
-				}
-			}
-			m.Accountmap[mapkey] = mapvalue
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -889,6 +595,25 @@ func (m *SCAccountInfo) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Errid", wireType)
+			}
+			m.Errid = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAccountinfo
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Errid |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Accountinfo", wireType)
 			}

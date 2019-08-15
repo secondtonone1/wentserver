@@ -57,16 +57,28 @@ func (dbm *DBManager) PutData(key []byte, value []byte) error {
 	return nil
 }
 
-func (dbm *DBManager) LoadAccountData() map[string]string {
+func (dbm *DBManager) LoadAccountData() [][]byte {
 	dbm.lock.RLock()
 	defer dbm.lock.RUnlock()
 	iter := dbm.db.NewIterator(util.BytesPrefix([]byte("account_")), nil)
-	maprt := make(map[string]string)
+	dataslice := make([][]byte, 0, 2048)
 	for iter.Next() {
 		fmt.Printf("[%s]:%s\n", iter.Key(), iter.Value())
-		maprt[string(iter.Key())] = string(iter.Value())
+		dataslice = append(dataslice, iter.Value())
 	}
-	return maprt
+	return dataslice
+}
+
+func (dbm *DBManager) LoadPlayerBaseData() [][]byte {
+	dbm.lock.RLock()
+	defer dbm.lock.RUnlock()
+	iter := dbm.db.NewIterator(util.BytesPrefix([]byte("playerbase_")), nil)
+	dataslice := make([][]byte, 0, 2048)
+	for iter.Next() {
+		fmt.Printf("[%s]:%s\n", iter.Key(), iter.Value())
+		dataslice = append(dataslice, iter.Value())
+	}
+	return dataslice
 }
 
 var ins *DBManager

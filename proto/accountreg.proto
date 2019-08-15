@@ -8,5 +8,6 @@ message CSAccountReg{
 }
 
 message SCAccountReg{
-	AccountInfo accountinfo = 1;
+    int32 errid = 1;
+	AccountInfo accountinfo = 2;
 }
