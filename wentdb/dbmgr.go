@@ -15,7 +15,7 @@ type DBManager struct {
 	lock *sync.RWMutex
 }
 
-func NewDBManage() *DBManager {
+func newDBManage() *DBManager {
 	return &DBManager{db: nil, lock: &sync.RWMutex{}}
 }
 
@@ -58,6 +58,8 @@ func (dbm *DBManager) PutData(key []byte, value []byte) error {
 }
 
 func (dbm *DBManager) LoadAccountData() map[string]string {
+	dbm.lock.RLock()
+	defer dbm.lock.RUnlock()
 	iter := dbm.db.NewIterator(util.BytesPrefix([]byte("account_")), nil)
 	maprt := make(map[string]string)
 	for iter.Next() {
@@ -72,7 +74,7 @@ var once sync.Once
 
 func GetDBManagerIns() *DBManager {
 	once.Do(func() {
-		ins = NewDBManage()
+		ins = newDBManage()
 	})
 	return ins
 }

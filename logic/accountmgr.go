@@ -4,38 +4,60 @@ import (
 	"sync"
 	"wentserver/config"
 	wentproto "wentserver/proto"
+
+	"wentserver/wentdb"
+
+	"github.com/gogo/protobuf/proto"
 )
 
 type AccountManager struct {
-	AccountInfos wentproto.AccountInfos
+	AccountInfos map[string]*wentproto.AccountInfo
 	lock         *sync.RWMutex
 }
 
-func NewAccountManager(data wentproto.AccountInfos) (*AccountManager, error) {
-	return &AccountManager{
-		AccountInfos: data,
-		lock:         &sync.RWMutex{},
-	}, nil
+func newAccountManager(data map[string]string) (*AccountManager, error) {
+
+	am := new(AccountManager)
+	for key, value := range data {
+		acinfo := &wentproto.AccountInfo{}
+		err := proto.Unmarshal([]byte(value), acinfo)
+		if err != nil {
+			continue
+		}
+		am.AccountInfos[key] = acinfo
+	}
+	am.lock = &sync.RWMutex{}
+	return am, nil
 }
 
 func (pm *AccountManager) GetAccount(name string) (interface{}, error) {
 	pm.lock.RLock()
 	defer pm.lock.RUnlock()
-	infomap := pm.AccountInfos.GetAccountmap()
-	if infomap == nil {
+
+	if pm.AccountInfos == nil {
 		return nil, config.ErrAccountMapEmpty
 	}
 
-	accountInfo, ok := infomap[name]
+	accountInfo, ok := pm.AccountInfos[name]
 	if !ok {
 		return nil, config.ErrAccountNameNotExist
 	}
-	return *accountInfo, nil
+	return accountInfo, nil
 }
 
 func (am *AccountManager) RegAccount(name string, act *wentproto.AccountInfo) {
 	am.lock.Lock()
 	defer am.lock.Unlock()
-	infomap := am.AccountInfos.GetAccountmap()
-	infomap[name] = act
+	am.AccountInfos[name] = act
+}
+
+var ins *AccountManager
+var once sync.Once
+var err error
+
+func GetAccountManagerIns() *AccountManager {
+	once.Do(func() {
+		ins, err = newAccountManager(wentdb.GetDBManagerIns().LoadAccountData())
+	})
+	return ins
 }
