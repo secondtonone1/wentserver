@@ -18,6 +18,13 @@ type PlayerManager struct {
 func newPlayerManager(basedata [][]byte) (*PlayerManager, error) {
 
 	am := new(PlayerManager)
+	am.lock = &sync.RWMutex{}
+	am.Acnt2Player = make(map[int64]int64)
+	am.BaseInfos = make(map[int64]*wentproto.PlayerBaseInfo)
+	am.PlayerInfos = make(map[int64]*wentproto.PlayerInfo)
+	if basedata == nil || len(basedata) == 0 {
+		return am, nil
+	}
 	for _, value := range basedata {
 		playerinfo := &wentproto.PlayerBaseInfo{}
 		err := proto.Unmarshal(value, playerinfo)
@@ -27,7 +34,7 @@ func newPlayerManager(basedata [][]byte) (*PlayerManager, error) {
 		am.Acnt2Player[playerinfo.Accountid] = playerinfo.Playeruid
 		am.BaseInfos[playerinfo.Playeruid] = playerinfo
 	}
-	am.lock = &sync.RWMutex{}
+
 	return am, nil
 }
 

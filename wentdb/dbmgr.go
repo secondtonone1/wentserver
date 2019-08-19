@@ -1,7 +1,6 @@
 package wentdb
 
 import (
-	"fmt"
 	"wentserver/config"
 
 	"sync"
@@ -63,7 +62,7 @@ func (dbm *DBManager) LoadAccountData() [][]byte {
 	iter := dbm.db.NewIterator(util.BytesPrefix([]byte("account_")), nil)
 	dataslice := make([][]byte, 0, 2048)
 	for iter.Next() {
-		fmt.Printf("[%s]:%s\n", iter.Key(), iter.Value())
+		//fmt.Printf("[%s]:%s\n", iter.Key(), iter.Value())
 		dataslice = append(dataslice, iter.Value())
 	}
 	return dataslice
@@ -75,10 +74,18 @@ func (dbm *DBManager) LoadPlayerBaseData() [][]byte {
 	iter := dbm.db.NewIterator(util.BytesPrefix([]byte("playerbase_")), nil)
 	dataslice := make([][]byte, 0, 2048)
 	for iter.Next() {
-		fmt.Printf("[%s]:%s\n", iter.Key(), iter.Value())
+		//fmt.Printf("[%s]:%s\n", iter.Key(), iter.Value())
 		dataslice = append(dataslice, iter.Value())
 	}
 	return dataslice
+}
+
+func (dbm *DBManager) LoadGenuid() []byte {
+	dbm.lock.RLock()
+	defer dbm.lock.RUnlock()
+
+	data, _ := dbm.GetData([]byte("genuid_"))
+	return data
 }
 
 var ins *DBManager

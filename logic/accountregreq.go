@@ -32,14 +32,40 @@ func RegAccountRegReq() {
 			return config.ErrProtobuffUnMarshal
 		}
 
+		_, geter := GetAccountManagerIns().GetAccount(inforeq.Accountname)
+		if geter == nil {
+
+			regrsp := new(protocol.MsgPacket)
+			regrsp.Head.Id = ACCOUNTREG_RSP
+
+			inforsp := &wentproto.SCAccountReg{
+				Errid: ERR_ACCOUNTHASEXIST,
+			}
+			rspdata, err := proto.Marshal(inforsp)
+			if err != nil {
+				return config.ErrProtobuffMarshal
+			}
+
+			regrsp.Head.Len = uint16(len(rspdata))
+			regrsp.Body.Data = rspdata
+			err = session.AsyncSend(regrsp)
+			return nil
+		}
+
 		regrsp := new(protocol.MsgPacket)
 		regrsp.Head.Id = ACCOUNTREG_RSP
 
+		uid, uiderr := GetGenuidIns().generateuid()
+		if uiderr != nil {
+			return config.ErrAccountRegFailed
+		}
+
 		actinfo := wentproto.AccountInfo{
-			Accountid:   1,
+			Accountid:   uid,
 			Accountname: inforeq.Accountname,
 		}
 
+		GetAccountManagerIns().RegAccount(inforeq.Accountname, &actinfo)
 		inforsp := &wentproto.SCAccountReg{
 			Accountinfo: &actinfo,
 		}

@@ -15,3 +15,7 @@ message SCAccountInfo{
     int32 errid = 1;
 	AccountInfo accountinfo = 2;
 }
+
+message GenerateUid{
+    int64 generateuid = 1;
+}

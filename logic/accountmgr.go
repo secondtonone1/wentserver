@@ -18,6 +18,12 @@ type AccountManager struct {
 func newAccountManager(data [][]byte) (*AccountManager, error) {
 
 	am := new(AccountManager)
+	am.lock = &sync.RWMutex{}
+	am.AccountInfos = make(map[string]*wentproto.AccountInfo)
+	if data == nil || len(data) == 0 {
+
+		return am, nil
+	}
 	for _, value := range data {
 		acinfo := &wentproto.AccountInfo{}
 		err := proto.Unmarshal(value, acinfo)
@@ -26,7 +32,7 @@ func newAccountManager(data [][]byte) (*AccountManager, error) {
 		}
 		am.AccountInfos[acinfo.Accountname] = acinfo
 	}
-	am.lock = &sync.RWMutex{}
+
 	return am, nil
 }
 
@@ -49,6 +55,12 @@ func (am *AccountManager) RegAccount(name string, act *wentproto.AccountInfo) {
 	am.lock.Lock()
 	defer am.lock.Unlock()
 	am.AccountInfos[name] = act
+	mdata, err := proto.Marshal(act)
+	if err != nil {
+		return
+	}
+	keystr := "account_" + act.Accountname
+	wentdb.GetDBManagerIns().PutData([]byte(keystr), mdata)
 }
 
 var accins *AccountManager

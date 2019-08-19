@@ -27,6 +27,10 @@ func InitMgr() error {
 		return config.ErrPlayerMgrInit
 	}
 
+	genuidmgr := logic.GetGenuidIns()
+	if genuidmgr == nil {
+		return config.ErrGenuidMgrFailed
+	}
 	return nil
 }
 

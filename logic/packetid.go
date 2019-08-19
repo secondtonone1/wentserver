@@ -9,6 +9,8 @@ const (
 )
 
 const (
-	ERR_NONE        = 0
-	ERR_ACTNOTEXIST = 1
+	ERR_NONE             = 0
+	ERR_ACTNOTEXIST      = 1
+	ERR_REGACCOUNTFAILED = 2
+	ERR_ACCOUNTHASEXIST  = 3
 )

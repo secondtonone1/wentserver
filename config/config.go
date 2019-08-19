@@ -47,4 +47,8 @@ var (
 	ErrDBPutValueFailed    = errors.New("DB PUT VALUE FAILED")
 	ErrAccountMgrInit      = errors.New("AccountMgr init failed")
 	ErrPlayerMgrInit       = errors.New("PlayerMgr init failed")
+	ErrUidUnmarshFailed    = errors.New("Uid Unmarsh Failed!")
+	ErrGenuidMgrFailed     = errors.New("Genuid Mgr Failed!")
+	ErrGenuidFailed        = errors.New("Gen uid failed !")
+	ErrAccountRegFailed    = errors.New("AccountReg Failed")
 )

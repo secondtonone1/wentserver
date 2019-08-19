@@ -73,4 +73,23 @@ func main() {
 	packet.Head.Len = (uint16)(len(pData))
 	packet.Body.Data = pData
 	cs.Send(packet)
+
+	packetrsp, err = cs.Recv()
+	if err != nil {
+		fmt.Println("receive error")
+		return
+	}
+
+	datarsp = packetrsp.(*protocol.MsgPacket)
+	fmt.Println("packet id is", datarsp.Head.Id)
+	fmt.Println("packet len is", datarsp.Head.Len)
+
+	csregrsp := &wentproto.SCAccountReg{}
+	err = proto.Unmarshal(datarsp.Body.Data, csregrsp)
+	if err != nil {
+		fmt.Println(config.ErrProtobuffUnMarshal.Error())
+		return
+	}
+	fmt.Println("accountid id is ", csregrsp.Accountinfo.Accountid)
+	fmt.Println("account name is ", csregrsp.Accountinfo.Accountname)
 }

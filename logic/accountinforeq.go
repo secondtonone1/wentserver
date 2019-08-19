@@ -64,7 +64,7 @@ func RegAccountInfoReq() {
 
 		inforsp := &wentproto.SCAccountInfo{
 			Accountinfo: actinfopl,
-			Errid:       ERR_ACTNOTEXIST,
+			Errid:       ERR_NONE,
 		}
 		rspdata, err := proto.Marshal(inforsp)
 		if err != nil {
