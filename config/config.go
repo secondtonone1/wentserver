@@ -5,12 +5,14 @@ import (
 )
 
 const (
-	SERVER_IP      = "127.0.0.1"
-	SERVER_PORT    = 10006
-	SERVER_TYPE    = "tcp"
-	SENDCHAN_SIZE  = 1024
-	MAXMESSAGE_LEN = 1024
-	WEBSERVER_PORT = 9998
+	SERVER_IP         = "127.0.0.1"
+	SERVER_PORT       = 10006
+	SERVER_TYPE       = "tcp"
+	SENDCHAN_SIZE     = 1024
+	MAXMESSAGE_LEN    = 1024
+	WEBSERVER_PORT    = 9998
+	DB_PATH           = "./lvdb"
+	SAVEROUTINE_COUNT = 2
 )
 
 var (
@@ -51,4 +53,6 @@ var (
 	ErrGenuidMgrFailed     = errors.New("Genuid Mgr Failed!")
 	ErrGenuidFailed        = errors.New("Gen uid failed !")
 	ErrAccountRegFailed    = errors.New("AccountReg Failed")
+	ErrAllSaveRoutineExit  = errors.New("All Save Routines exit")
+	ErrDBHandlerExit       = errors.New("DBHandler exit success")
 )

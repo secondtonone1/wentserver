@@ -60,7 +60,7 @@ func (am *AccountManager) RegAccount(name string, act *wentproto.AccountInfo) {
 		return
 	}
 	keystr := "account_" + act.Accountname
-	wentdb.GetDBManagerIns().PutData([]byte(keystr), mdata)
+	wentdb.GetDBHandlerIns().PostMsgToSave(&wentdb.MsgSave{Key: []byte(keystr), Value: mdata})
 }
 
 var accins *AccountManager

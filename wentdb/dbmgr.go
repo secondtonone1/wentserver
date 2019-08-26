@@ -1,9 +1,8 @@
 package wentdb
 
 import (
-	"wentserver/config"
-
 	"sync"
+	"wentserver/config"
 
 	"github.com/syndtr/goleveldb/leveldb"
 	"github.com/syndtr/goleveldb/leveldb/util"
@@ -88,12 +87,22 @@ func (dbm *DBManager) LoadGenuid() []byte {
 	return data
 }
 
-var ins *DBManager
-var once sync.Once
+var insdb *DBManager
+var oncedb sync.Once
 
 func GetDBManagerIns() *DBManager {
-	once.Do(func() {
-		ins = newDBManage()
+	oncedb.Do(func() {
+		insdb = newDBManage()
 	})
-	return ins
+	return insdb
+}
+
+func InitDB(path string) (*DBManager, error) {
+	var dbmgr *DBManager = GetDBManagerIns()
+	//err := dbmgr.InitDB("./lvdb")
+	err := dbmgr.InitDB(path)
+	if err != nil {
+		return nil, config.ErrDBInitFailed
+	}
+	return dbmgr, nil
 }

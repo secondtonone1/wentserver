@@ -52,11 +52,13 @@ func (ug *UidGenerator) generateuid() (int64, error) {
 	uidinfo := &wentproto.GenerateUid{
 		Generateuid: ug.curgenuid,
 	}
-	value, err := proto.Marshal(uidinfo)
+	values, err := proto.Marshal(uidinfo)
 	if err != nil {
 		return -1, config.ErrGenuidFailed
 	}
-	err = wentdb.GetDBManagerIns().PutData([]byte("genuid_"), value)
+
+	wentdb.GetDBHandlerIns().PostMsgToSave(&wentdb.MsgSave{Key: []byte("genuid_"), Value: values})
+
 	if err != nil {
 		return -1, config.ErrGenuidFailed
 	}

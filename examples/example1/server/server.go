@@ -7,15 +7,6 @@ import (
 	"wentserver/wentdb"
 )
 
-func InitDB() (*wentdb.DBManager, error) {
-	var dbmgr *wentdb.DBManager = wentdb.GetDBManagerIns()
-	err := dbmgr.InitDB("./lvdb")
-	if err != nil {
-		return nil, config.ErrDBInitFailed
-	}
-	return dbmgr, nil
-}
-
 func InitMgr() error {
 	mgr := logic.GetAccountManagerIns()
 	if mgr == nil {
@@ -36,13 +27,13 @@ func InitMgr() error {
 
 func main() {
 	logic.RegServerHandlers()
-
-	dbmgr, err := InitDB()
-	if err != nil {
+	dh := wentdb.GetDBHandlerIns()
+	if dh == nil {
 		return
 	}
-	defer dbmgr.CloseDB()
-	err = InitMgr()
+	dh.StartSaveRoutine()
+	defer dh.CloseDB()
+	err := InitMgr()
 	if err != nil {
 		return
 	}
