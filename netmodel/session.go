@@ -7,6 +7,7 @@ import (
 	"sync/atomic"
 	"time"
 	"wentserver/config"
+	"wentserver/log"
 	"wentserver/protocol"
 )
 
@@ -63,6 +64,7 @@ func (se *Session) CloseSendChan() error {
 	if atomic.CompareAndSwapInt32(&se.sendChanClosed, 0, 1) {
 		close(se.sendChan)
 		fmt.Println("recv goroutine exit!")
+		log.GetLogManagerIns().Println("recv goroutine exit!")
 	}
 	return nil
 }
@@ -84,6 +86,7 @@ func (se *Session) sendLoop() {
 	defer se.Close()
 	defer func() {
 		fmt.Println("send goroutine exit!")
+		log.GetLogManagerIns().Println("send goroutine exit!")
 	}()
 	for {
 		select {

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"sync"
 	"wentserver/config"
+	log "wentserver/log"
 )
 
 type MsgSave struct {
@@ -91,6 +92,7 @@ func (dh *DBHandler) PostMsgToSave(msg *MsgSave) error {
 	select {
 	case <-dh.savexit:
 		fmt.Println("all save routines exited")
+		log.GetLogManagerIns().Println("all save routines exited")
 		return config.ErrAllSaveRoutineExit
 	default:
 		if dh.bclosed == true {
@@ -99,6 +101,7 @@ func (dh *DBHandler) PostMsgToSave(msg *MsgSave) error {
 		}
 		dh.savechan <- msg
 		fmt.Println("msg post into the save chan")
+		log.GetLogManagerIns().Println("msg post into the save chan")
 		return nil
 	}
 }
@@ -107,6 +110,7 @@ func (dh *DBHandler) StartSaveRoutine() {
 	go func(wg *sync.WaitGroup, savexit chan struct{}) {
 		defer func(st chan struct{}) {
 			fmt.Println("save watcher catches all save routine exit")
+			log.GetLogManagerIns().Println("save watcher catches all save routine exit")
 			close(st)
 		}(savexit)
 		wg.Wait()
@@ -126,9 +130,11 @@ func (dh *DBHandler) StartSaveRoutine() {
 						return
 					}
 					fmt.Println("saveroutine index is : ", index, "save msg", msg)
+					log.GetLogManagerIns().Println("saveroutine index is : ", index, "save msg", msg)
 					err := dh.dbm.PutData(msg.Key, msg.Value)
 					if err != nil {
 						fmt.Println("saveroutine ", index, "save data failed")
+						log.GetLogManagerIns().Println("saveroutine ", index, "save data failed")
 						return
 					}
 				}

@@ -55,4 +55,5 @@ var (
 	ErrAccountRegFailed    = errors.New("AccountReg Failed")
 	ErrAllSaveRoutineExit  = errors.New("All Save Routines exit")
 	ErrDBHandlerExit       = errors.New("DBHandler exit success")
+	ErrLogInit             = errors.New("Log Init Failed!")
 )

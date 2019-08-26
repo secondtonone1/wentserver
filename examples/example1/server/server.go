@@ -2,6 +2,7 @@ package main
 
 import (
 	"wentserver/config"
+	"wentserver/log"
 	"wentserver/logic"
 	"wentserver/netmodel"
 	"wentserver/wentdb"
@@ -27,6 +28,11 @@ func InitMgr() error {
 
 func main() {
 	logic.RegServerHandlers()
+	logins := log.InitLog("./server.log")
+	if logins == nil {
+		return
+	}
+	defer logins.CloseLogMgr()
 	dh := wentdb.GetDBHandlerIns()
 	if dh == nil {
 		return
