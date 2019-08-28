@@ -34,8 +34,8 @@ func (dbm *DBManager) CloseDB() {
 }
 
 func (dbm *DBManager) GetData(key []byte) ([]byte, error) {
-	dbm.lock.RLock()
-	defer dbm.lock.RUnlock()
+	//dbm.lock.RLock()
+	//defer dbm.lock.RUnlock()
 	// 读取某条数据
 	data, err := dbm.db.Get(key, nil)
 	if err != nil {
@@ -45,8 +45,8 @@ func (dbm *DBManager) GetData(key []byte) ([]byte, error) {
 }
 
 func (dbm *DBManager) PutData(key []byte, value []byte) error {
-	dbm.lock.Lock()
-	defer dbm.lock.Unlock()
+	//dbm.lock.Lock()
+	//defer dbm.lock.Unlock()
 	// 读取某条数据
 	err := dbm.db.Put(key, value, nil)
 	if err != nil {
@@ -56,8 +56,8 @@ func (dbm *DBManager) PutData(key []byte, value []byte) error {
 }
 
 func (dbm *DBManager) LoadAccountData() [][]byte {
-	dbm.lock.RLock()
-	defer dbm.lock.RUnlock()
+	//dbm.lock.RLock()
+	//defer dbm.lock.RUnlock()
 	iter := dbm.db.NewIterator(util.BytesPrefix([]byte("account_")), nil)
 	dataslice := make([][]byte, 0, 2048)
 	for iter.Next() {
@@ -68,8 +68,8 @@ func (dbm *DBManager) LoadAccountData() [][]byte {
 }
 
 func (dbm *DBManager) LoadPlayerBaseData() [][]byte {
-	dbm.lock.RLock()
-	defer dbm.lock.RUnlock()
+	//dbm.lock.RLock()
+	//defer dbm.lock.RUnlock()
 	iter := dbm.db.NewIterator(util.BytesPrefix([]byte("playerbase_")), nil)
 	dataslice := make([][]byte, 0, 2048)
 	for iter.Next() {
@@ -80,8 +80,8 @@ func (dbm *DBManager) LoadPlayerBaseData() [][]byte {
 }
 
 func (dbm *DBManager) LoadGenuid() []byte {
-	dbm.lock.RLock()
-	defer dbm.lock.RUnlock()
+	//dbm.lock.RLock()
+	//defer dbm.lock.RUnlock()
 
 	data, _ := dbm.GetData([]byte("genuid_"))
 	return data
