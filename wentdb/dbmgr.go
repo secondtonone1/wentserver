@@ -27,10 +27,12 @@ func (dbm *DBManager) InitDB(path string) error {
 }
 
 func (dbm *DBManager) CloseDB() {
-	if dbm.db == nil {
-		return
-	}
-	dbm.db.Close()
+	onceclose.Do(func(){
+		if dbm.db == nil {
+			return
+		}
+		dbm.db.Close()
+	})
 }
 
 func (dbm *DBManager) GetData(key []byte) ([]byte, error) {
@@ -89,7 +91,7 @@ func (dbm *DBManager) LoadGenuid() []byte {
 
 var insdb *DBManager
 var oncedb sync.Once
-
+var onceclose sync.Once
 func GetDBManagerIns() *DBManager {
 	oncedb.Do(func() {
 		insdb = newDBManage()
