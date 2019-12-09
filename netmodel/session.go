@@ -62,6 +62,9 @@ func (se *Session) Close() error {
 
 func (se *Session) CloseSendChan() error {
 	if atomic.CompareAndSwapInt32(&se.sendChanClosed, 0, 1) {
+		if err := recover(); err != nil {
+			fmt.Println("recv goroutine panic!")
+		}
 		close(se.sendChan)
 		fmt.Println("recv goroutine exit!")
 		log.GetLogManagerIns().Println("recv goroutine exit!")
@@ -85,6 +88,9 @@ func (se *Session) SafeSetReadDeadline(delt time.Duration) {
 func (se *Session) sendLoop() {
 	defer se.Close()
 	defer func() {
+		if err := recover(); err != nil {
+			fmt.Println("send goroutine panic!")
+		}
 		fmt.Println("send goroutine exit!")
 		log.GetLogManagerIns().Println("send goroutine exit!")
 	}()

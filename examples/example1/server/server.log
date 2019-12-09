@@ -1,2 +1,20 @@
 2019/08/26 18:11:32 session.go:67: recv goroutine exit!
 2019/08/26 18:11:32 session.go:89: send goroutine exit!
+2019/12/09 17:10:24 dbhandler.go:103: msg post into the save chan
+2019/12/09 17:10:24 dbhandler.go:103: msg post into the save chan
+2019/12/09 17:10:24 dbhandler.go:132: saveroutine index is :  0 save msg &{[103 101 110 117 105 100 95] [8 2]}
+2019/12/09 17:10:24 dbhandler.go:132: saveroutine index is :  1 save msg &{[97 99 99 111 117 110 116 95 90 97 99 107] [8 1 18 4 90 97 99 107]}
+2019/12/09 17:10:24 session.go:67: recv goroutine exit!
+2019/12/09 17:10:24 session.go:89: send goroutine exit!
+2019/12/09 17:10:31 session.go:67: recv goroutine exit!
+2019/12/09 17:10:31 session.go:89: send goroutine exit!
+2019/12/09 17:31:16 dbhandler.go:103: msg post into the save chan
+2019/12/09 17:31:16 dbhandler.go:103: msg post into the save chan
+2019/12/09 17:31:16 dbhandler.go:132: saveroutine index is :  0 save msg &{[103 101 110 117 105 100 95] [8 2]}
+2019/12/09 17:31:16 dbhandler.go:132: saveroutine index is :  1 save msg &{[97 99 99 111 117 110 116 95 90 97 99 107] [8 1 18 4 90 97 99 107]}
+2019/12/09 17:31:16 session.go:70: recv goroutine exit!
+2019/12/09 17:31:16 session.go:95: send goroutine exit!
+2019/12/09 17:31:39 session.go:70: recv goroutine exit!
+2019/12/09 17:31:39 session.go:95: send goroutine exit!
+2019/12/09 17:31:47 session.go:70: recv goroutine exit!
+2019/12/09 17:31:47 session.go:95: send goroutine exit!

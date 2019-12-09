@@ -3,11 +3,8 @@ package netmodel
 import (
 	"fmt"
 	"net"
-	"os"
-	"os/signal"
 	"strconv"
 	"sync"
-	"syscall"
 	"wentserver/config"
 )
 
@@ -54,20 +51,11 @@ func (wt *WtServer) acceptLoop() error {
 
 func (wt *WtServer) AcceptLoop() {
 
-	stopsignal := make(chan os.Signal) // 接收系统中断信号
-	var shutdownSignals = []os.Signal{os.Interrupt, syscall.SIGTERM, syscall.SIGINT}
-	signal.Notify(stopsignal, shutdownSignals...)
-
 	for {
-		select {
-		case <-stopsignal:
-			fmt.Println("server stop by signal")
-			wt.Close()
+		if err := wt.acceptLoop(); err != nil {
+			fmt.Println("went server accept failed!!")
 			return
-		default:
-			wt.acceptLoop()
 		}
-
 	}
 
 }

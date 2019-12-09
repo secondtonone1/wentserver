@@ -89,17 +89,16 @@ func (dh *DBHandler) LoadGenuid() []byte {
 func (dh *DBHandler) PostMsgToSave(msg *MsgSave) error {
 	dh.lock.RLock()
 	defer dh.lock.RUnlock()
+	if dh.bclosed == true {
+		fmt.Println("dbhandler main thread exit")
+		return config.ErrDBHandlerExit
+	}
 	select {
 	case <-dh.savexit:
 		fmt.Println("all save routines exited")
 		log.GetLogManagerIns().Println("all save routines exited")
 		return config.ErrAllSaveRoutineExit
-	default:
-		if dh.bclosed == true {
-			fmt.Println("dbhandler main thread exit")
-			return config.ErrDBHandlerExit
-		}
-		dh.savechan <- msg
+	case dh.savechan <- msg:
 		fmt.Println("msg post into the save chan")
 		log.GetLogManagerIns().Println("msg post into the save chan")
 		return nil
