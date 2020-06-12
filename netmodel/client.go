@@ -5,8 +5,8 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-	"wentserver/config"
-	"wentserver/protocol"
+	"wentmin/common"
+	"wentmin/protocol"
 )
 
 type ClientSess struct {
@@ -42,11 +42,11 @@ func Dial(network, address string) (*ClientSess, error) {
 func (cs *ClientSess) Send(packet interface{}) error {
 	select {
 	case <-cs.stopedChan:
-		return config.ErrSignalStopped
+		return common.ErrSignalStopped
 	default:
 		err := cs.protocol.WritePacket(cs.conn, packet)
 		if err != nil {
-			return config.ErrWritePacketFailed
+			return common.ErrWritePacketFailed
 		}
 
 	}
@@ -56,7 +56,7 @@ func (cs *ClientSess) Send(packet interface{}) error {
 func (cs *ClientSess) Recv() (interface{}, error) {
 	packet, err := cs.protocol.ReadPacket(cs.conn)
 	if err != nil {
-		return nil, config.ErrReadPacketFailed
+		return nil, common.ErrReadPacketFailed
 	}
 
 	return packet, nil

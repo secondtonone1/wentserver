@@ -2,8 +2,8 @@ package netmodel
 
 import (
 	"sync"
-	"wentserver/config"
-	"wentserver/protocol"
+	"wentmin/common"
+	"wentmin/protocol"
 )
 
 type MsgHandlerInter interface {
@@ -26,16 +26,16 @@ func (mh *MsgHandlerImpl) HandleMsgPacket(param interface{}, se interface{}) err
 		session   *Session
 	)
 	if msgpacket, ok = param.(*protocol.MsgPacket); !ok {
-		return config.ErrTypeAssertain
+		return common.ErrTypeAssertain
 	}
 
 	if session, ok = se.(*Session); !ok {
-		return config.ErrTypeAssertain
+		return common.ErrTypeAssertain
 	}
 
 	if callback, ok = mh.cbfuncs[msgpacket.Head.Id]; !ok {
 		//不存在
-		return config.ErrMsgHandlerReg
+		return common.ErrMsgHandlerReg
 	}
 
 	return callback(session, param)
@@ -48,7 +48,7 @@ func (mh *MsgHandlerImpl) RegMsgHandler(cbid uint16, param interface{}) error {
 	)
 
 	if callback, ok = param.(CallBackFunc); !ok {
-		return config.ErrParamCallBack
+		return common.ErrParamCallBack
 	}
 
 	mh.cbfuncs[cbid] = callback
@@ -67,16 +67,16 @@ func (mh *MsgHandlerImpl) SafeHandleMsgPacket(param interface{}, se interface{})
 		session   *Session
 	)
 	if msgpacket, ok = param.(*protocol.MsgPacket); !ok {
-		return config.ErrTypeAssertain
+		return common.ErrTypeAssertain
 	}
 
 	if session, ok = se.(*Session); !ok {
-		return config.ErrTypeAssertain
+		return common.ErrTypeAssertain
 	}
 
 	if callback, ok = mh.cbfuncs[msgpacket.Head.Id]; !ok {
 		//不存在
-		return config.ErrMsgHandlerReg
+		return common.ErrMsgHandlerReg
 	}
 
 	return callback(session, param)
@@ -92,7 +92,7 @@ func (mh *MsgHandlerImpl) SafeRegMsgHandler(cbid uint16, param interface{}) erro
 	)
 
 	if callback, ok = param.(CallBackFunc); !ok {
-		return config.ErrParamCallBack
+		return common.ErrParamCallBack
 	}
 
 	mh.cbfuncs[cbid] = callback
